@@ -1,0 +1,6 @@
+{
+  "name": "Basic QR - Free QR Code Studio",
+  "description": "100% free, 100% client-side Global QR Code Design Studio for high-quality custom QR codes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

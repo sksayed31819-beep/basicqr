@@ -1,0 +1,86 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@import "tailwindcss";
+@import "./styles/tokens.css";
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--app-bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Custom Studio Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Studio Surface and Panel Utilities */
+.studio-app {
+  background-color: var(--app-bg);
+  color: var(--text-primary);
+}
+
+.studio-panel {
+  background-color: var(--panel-bg);
+  border-color: var(--border);
+}
+
+.studio-surface {
+  background-color: var(--surface-bg);
+  border-color: var(--border);
+}
+
+.studio-border {
+  border-color: var(--border);
+}
+
+.studio-accent {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.studio-accent:hover {
+  background-color: var(--accent-hover);
+}
+
+.text-token-primary {
+  color: var(--text-primary);
+}
+
+.text-token-secondary {
+  color: var(--text-secondary);
+}
+
+.text-token-tertiary {
+  color: var(--text-tertiary);
+}
