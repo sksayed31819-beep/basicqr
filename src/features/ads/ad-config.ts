@@ -43,20 +43,20 @@ export interface ProductionAdConfig {
   network: SupportedAdNetwork;
 
   /**
-   * Required duration (seconds) user must watch before the 20-minute pass is unlocked.
+   * Required duration (seconds) user must watch before the pass is unlocked.
    * Recommended: 10 seconds.
    */
   rewardedDurationSeconds: number;
 
   /**
    * Duration of the unlocked pass in minutes.
-   * Default: 20 minutes.
+   * Default: 10 minutes.
    */
   passDurationMinutes: number;
 
   /**
    * Maximum high-res / vector exports permitted per pass session.
-   * Default: 3 downloads.
+   * Default: 2 downloads.
    */
   downloadsPerPass: number;
 

@@ -115,6 +115,7 @@ export interface QrStyleConfig {
 export interface QrLogoConfig {
   enabled: boolean;
   src: string;
+  rawSrc?: string; // original uploaded image, kept so shape changes re-crop from the source
   size: number; // 0.1 to 0.4 relative to QR code
   margin: number;
   hideBackgroundDots: boolean;

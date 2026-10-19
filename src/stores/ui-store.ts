@@ -6,10 +6,20 @@
 import { create } from 'zustand';
 import type { UiState, StudioRailTab, StudioMobileTab, ThemeMode } from '../types/editor.ts';
 
+function getInitialTheme(): ThemeMode {
+  try {
+    const saved = localStorage.getItem('basicqr_theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+  } catch {
+    // storage unavailable, fall back to dark
+  }
+  return 'dark';
+}
+
 export const useUiStore = create<UiState>((set) => ({
   activeRailTab: 'content',
   activeMobileTab: 'content',
-  theme: 'dark',
+  theme: getInitialTheme(),
   isExportModalOpen: false,
   showRawPayload: false,
   isGuidesModalOpen: false,

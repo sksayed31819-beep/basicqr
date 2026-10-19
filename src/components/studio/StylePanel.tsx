@@ -325,7 +325,7 @@ export const StylePanel: React.FC = () => {
       {/* 2. BACKGROUND & TRANSPARENCY */}
       <div className="p-4 rounded-2xl studio-surface border studio-border space-y-4">
         <span className="text-xs font-bold text-token-primary block">
-          Background & Canvas Canvas
+          Background & Canvas
         </span>
 
         <label className="flex items-center justify-between cursor-pointer select-none">

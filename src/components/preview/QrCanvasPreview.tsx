@@ -41,6 +41,15 @@ export const QrCanvasPreview: React.FC<QrCanvasPreviewProps> = ({
 
   const triggerValidation = (canvas: HTMLCanvasElement | null) => {
     if (!runValidation || !canvas) return;
+    if (!rawPayload || !rawPayload.trim()) {
+      setScannability({
+        isChecking: false,
+        passed: false,
+        decodedPayload: '',
+        payloadMatch: false,
+      });
+      return;
+    }
 
     if (validationTimeoutRef.current) {
       clearTimeout(validationTimeoutRef.current);

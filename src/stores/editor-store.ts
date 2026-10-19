@@ -117,17 +117,32 @@ export const DEFAULT_EXPORT: ExportState = {
   filename: 'basic-qr-code',
 };
 
+const DESIGN_STORAGE_KEY = 'basicqr_design_v1';
+
+function loadSavedDesign(): Record<string, any> {
+  try {
+    const raw = localStorage.getItem(DESIGN_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+const savedDesign = loadSavedDesign();
+
 export const useEditorStore = create<EditorState>((set, get) => ({
-  docTitle: 'Untitled QR Code',
+  docTitle: savedDesign.docTitle ?? 'Untitled QR Code',
   setDocTitle: (docTitle: string) => set({ docTitle }),
 
-  dataType: 'url',
-  payloads: DEFAULT_PAYLOADS,
-  style: DEFAULT_STYLE,
-  logo: DEFAULT_LOGO,
-  frame: DEFAULT_FRAME,
+  dataType: savedDesign.dataType ?? 'url',
+  payloads: savedDesign.payloads ? { ...DEFAULT_PAYLOADS, ...savedDesign.payloads } : DEFAULT_PAYLOADS,
+  style: { ...DEFAULT_STYLE, ...savedDesign.style },
+  logo: { ...DEFAULT_LOGO, ...savedDesign.logo },
+  frame: { ...DEFAULT_FRAME, ...savedDesign.frame },
   scannability: DEFAULT_SCANNABILITY,
-  exportConfig: DEFAULT_EXPORT,
+  exportConfig: { ...DEFAULT_EXPORT, ...savedDesign.exportConfig, isExporting: false },
 
   activeTemplateId: null,
 
@@ -290,3 +305,27 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     return encodeQrPayload(dataType, payloads);
   },
 }));
+
+// Autosave the design (debounced) so a refresh never loses the user's work.
+let saveTimer: ReturnType<typeof setTimeout> | null = null;
+useEditorStore.subscribe((state) => {
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try {
+      localStorage.setItem(
+        DESIGN_STORAGE_KEY,
+        JSON.stringify({
+          docTitle: state.docTitle,
+          dataType: state.dataType,
+          payloads: state.payloads,
+          style: state.style,
+          logo: state.logo,
+          frame: state.frame,
+          exportConfig: state.exportConfig,
+        })
+      );
+    } catch {
+      // storage full or unavailable: skip silently
+    }
+  }, 400);
+});

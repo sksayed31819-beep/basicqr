@@ -278,10 +278,10 @@ export const LegalComplianceModal: React.FC<LegalComplianceModalProps> = ({
 
               <div className="space-y-2">
                 <h4 className="font-bold text-xs text-token-primary">
-                  The Rewarded 20-Minute Export Pass
+                  The 10-Minute Export Pass
                 </h4>
                 <p className="text-xs">
-                  When you request an ultra-high-resolution 4K PNG, vector SVG, or 300-DPI print-ready PDF, you are presented with a 10-second sponsor break. Viewing this break unlocks an active Pass valid for 20 minutes with 3 free high-resolution downloads.
+                  When you request an ultra-high-resolution 4K PNG, vector SVG, or 300-DPI print-ready PDF, you are presented with a 10-second sponsor break. Viewing this break unlocks an active Pass valid for 10 minutes with 2 free high-resolution downloads.
                 </p>
                 <p className="text-xs text-token-tertiary">
                   If you prefer not to view ads, standard 512px PNG downloads are permanently free, instant, and require no ads.

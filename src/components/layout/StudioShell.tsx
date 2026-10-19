@@ -400,7 +400,7 @@ export const StudioShell: React.FC = () => {
       {/* MOBILE EXPANDED FULL-SIZE PREVIEW MODAL */}
       {/* ============================================================== */}
       {isMobilePreviewExpanded && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-md flex flex-col animate-fade-in p-4 overflow-y-auto">
+        <div data-theme="dark" className="lg:hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-md flex flex-col animate-fade-in p-4 overflow-y-auto">
           <div className="flex items-center justify-between pb-3 border-b border-slate-800">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-token-primary">

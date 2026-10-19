@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-:root {
-  /* Permanent Dark Studio Theme */
+:root,
+[data-theme='dark'] {
+  /* Dark Studio Theme */
   --app-bg: #0B0D12;
   --panel-bg: #11141C;
   --surface-bg: #191E29;
@@ -16,7 +17,8 @@
   --accent-light: rgba(139, 92, 246, 0.15);
   --text-primary: #F3F4F6;
   --text-secondary: #9CA3AF;
-  --text-tertiary: #6B7280;
+  --text-tertiary: #8A94A6;
+  --accent-text: #A78BFA;
 
   /* Semantic */
   --success: #10B981;
@@ -39,24 +41,25 @@
 }
 
 [data-theme='light'] {
-  --app-bg: #E8EDF5;
+  --app-bg: #EEF1F7;
   --panel-bg: #FFFFFF;
-  --surface-bg: #F1F5F9;
-  --surface-hover: #E2E8F0;
+  --surface-bg: #F3F5FA;
+  --surface-hover: #E3E8F1;
   --border: #CBD5E1;
-  --border-subtle: #CBD5E1;
+  --border-subtle: #E2E8F0;
   --accent: #6D28D9;
   --accent-hover: #5B21B6;
-  --accent-light: rgba(109, 40, 217, 0.12);
+  --accent-text: #5B21B6;
+  --accent-light: rgba(109, 40, 217, 0.10);
   --text-primary: #0F172A;
   --text-secondary: #334155;
-  --text-tertiary: #64748B;
+  --text-tertiary: #475569;
 
   /* Semantic */
-  --success: #059669;
-  --success-bg: rgba(5, 150, 105, 0.12);
-  --warning: #D97706;
-  --warning-bg: rgba(217, 119, 6, 0.12);
-  --danger: #DC2626;
-  --danger-bg: rgba(220, 38, 38, 0.12);
+  --success: #065F46;
+  --success-bg: #D1FAE5;
+  --warning: #92400E;
+  --warning-bg: #FEF3C7;
+  --danger: #BE123C;
+  --danger-bg: #FFE4E6;
 }

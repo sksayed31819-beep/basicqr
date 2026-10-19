@@ -551,7 +551,7 @@ export const ContentPanel: React.FC = () => {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-mono text-token-tertiary">
-              {rawPayload.length} bytes
+              {new TextEncoder().encode(rawPayload).length} bytes
             </span>
             <button
               type="button"

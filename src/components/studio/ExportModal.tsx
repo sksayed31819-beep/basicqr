@@ -72,8 +72,13 @@ export const ExportModal: React.FC = () => {
 
   const payload = getEncodedContent();
   const isPassActive = hasActivePass();
+  const isPayloadEmpty = !payload || !payload.trim();
 
   const executeExport = async (resOverride?: ExportResolution) => {
+    if (isPayloadEmpty) {
+      setErrorMessage('Your QR code is empty. Add content on the Content tab before exporting.');
+      return;
+    }
     setIsExporting(true);
     setErrorMessage(null);
     setDownloadSuccess(false);
@@ -360,7 +365,7 @@ export const ExportModal: React.FC = () => {
           <div className="pt-2 flex flex-col gap-2">
             <button
               type="button"
-              disabled={isExporting}
+              disabled={isExporting || isPayloadEmpty}
               onClick={handleTriggerExport}
               className={`w-full py-2.5 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer ${
                 downloadSuccess

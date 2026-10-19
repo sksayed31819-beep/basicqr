@@ -79,7 +79,7 @@ export function createQrCodeStylingOptions({
     width: renderSize,
     height: renderSize,
     margin: effectiveMargin,
-    data: data || 'https://basicqr.bond',
+    data: data || ' ',
     qrOptions: {
       typeNumber: 0,
       mode: 'Byte',

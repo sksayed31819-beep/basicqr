@@ -36,6 +36,7 @@ export const LogoPanel: React.FC = () => {
     setLogo({
       enabled: true,
       src: processed,
+      rawSrc,
       shape: activeShape,
     });
 
@@ -71,6 +72,7 @@ export const LogoPanel: React.FC = () => {
     setLogo({
       enabled: false,
       src: '',
+      rawSrc: '',
     });
     setErrorMessage(null);
   };
@@ -78,7 +80,7 @@ export const LogoPanel: React.FC = () => {
   const handleShapeChange = async (shape: 'square' | 'rounded' | 'circle') => {
     setLogo({ shape });
     if (logo.enabled && logo.src) {
-      await handleApplyLogoSrc(logo.src, shape);
+      await handleApplyLogoSrc(logo.rawSrc || logo.src, shape);
     }
   };
 

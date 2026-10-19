@@ -47,7 +47,7 @@ export const NavRail: React.FC = () => {
             key={item.id}
             type="button"
             onClick={() => setActiveRailTab(item.id)}
-            title={`${item.label} (${item.phase === 1 ? 'Phase 1 Active' : 'Phase 2'})`}
+            title={item.label}
             className={`w-12 h-13 rounded-xl flex flex-col items-center justify-center gap-1 transition-all cursor-pointer relative ${
               isActive
                 ? 'bg-purple-600/15 text-purple-600 dark:text-purple-400 font-bold'

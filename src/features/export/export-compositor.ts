@@ -4,8 +4,16 @@
  */
 
 import QRCodeStyling from 'qr-code-styling';
-import { jsPDF } from 'jspdf';
 import fileSaver from 'file-saver';
+
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
 
 function downloadBlob(blob: Blob, filename: string) {
   if (typeof window === 'undefined') return;
@@ -474,8 +482,8 @@ export async function exportCompositeSvg(
   let textMarkup = '';
   if (frame.style !== 'none' && frame.text) {
     textMarkup = `
-      <text x="${metrics.width / 2}" y="${metrics.textY}" font-family="${frame.font || 'Space Grotesk'}, sans-serif" font-size="${metrics.fontSize}px" font-weight="900" fill="${frame.textColor}" text-anchor="middle" dominant-baseline="middle" letter-spacing="2">
-        ${frame.text.toUpperCase()}
+      <text x="${metrics.width / 2}" y="${metrics.textY}" font-family="${escapeXml(frame.font || 'Space Grotesk')}, sans-serif" font-size="${metrics.fontSize}px" font-weight="900" fill="${frame.textColor}" text-anchor="middle" dominant-baseline="middle" letter-spacing="2">
+        ${escapeXml(frame.text.toUpperCase())}
       </text>
     `;
   }
@@ -484,7 +492,7 @@ export async function exportCompositeSvg(
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${metrics.width} ${metrics.height}" width="${metrics.width}" height="${metrics.height}">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&amp;display=swap');
-    text { font-family: '${frame.font || 'Space Grotesk'}', sans-serif; }
+    text { font-family: '${escapeXml(frame.font || 'Space Grotesk')}', sans-serif; }
   </style>
   ${frameBgMarkup}
   <g transform="translate(${metrics.qrX}, ${metrics.qrY})">
@@ -514,6 +522,7 @@ export async function exportCompositePdf(
   const imgData = masterCanvas.toDataURL('image/png');
   const aspectRatio = masterCanvas.height / masterCanvas.width;
 
+  const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
