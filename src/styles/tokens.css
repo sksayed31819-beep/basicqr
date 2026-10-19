@@ -41,12 +41,12 @@
 }
 
 [data-theme='light'] {
-  --app-bg: #EEF1F7;
+  --app-bg: #E6EAF2;
   --panel-bg: #FFFFFF;
-  --surface-bg: #F3F5FA;
-  --surface-hover: #E3E8F1;
-  --border: #CBD5E1;
-  --border-subtle: #E2E8F0;
+  --surface-bg: #EEF1F7;
+  --surface-hover: #DDE3EE;
+  --border: #A9B5C6;
+  --border-subtle: #CBD3E0;
   --accent: #6D28D9;
   --accent-hover: #5B21B6;
   --accent-text: #5B21B6;

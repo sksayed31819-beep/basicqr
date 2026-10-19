@@ -149,9 +149,27 @@
   background-color: var(--surface-hover);
 }
 
-/* Give cards a little depth so the light theme does not look flat */
+/* Give cards clear edges and a little depth so the light theme does not look flat */
 [data-theme='light'] .studio-surface {
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme='light'] .studio-panel {
+  box-shadow: 0 1px 1px rgba(15, 23, 42, 0.04);
+}
+
+/* Inputs: visible edge, clearer focus */
+[data-theme='light'] :is(input, textarea, select) {
+  border-color: var(--border);
+}
+
+[data-theme='light'] :is(input, textarea, select):focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.15);
+}
+
+[data-theme='light'] ::placeholder {
+  color: #64748B;
 }
 
 /* Modal scrim */
