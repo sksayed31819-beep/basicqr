@@ -5,6 +5,36 @@
 
 import { PRODUCTION_AD_CONFIG, type SupportedAdNetwork } from './ad-config.ts';
 
+let thirdPartyAdLoaded = false;
+
+/**
+ * Loads the configured third-party ad script (Monetag Vignette) on demand.
+ * Called only when the user starts the export sponsor break, at most once
+ * per page session. Failures (ad-blockers, network) are ignored on purpose:
+ * the export unlock never depends on the ad being served.
+ */
+export function loadThirdPartyAdScript(): void {
+  if (thirdPartyAdLoaded || typeof document === 'undefined') return;
+  if (PRODUCTION_AD_CONFIG.network !== 'monetag') return;
+
+  const { zoneId, scriptUrl } = PRODUCTION_AD_CONFIG.monetag;
+  if (!zoneId || !scriptUrl) return;
+
+  try {
+    const script = document.createElement('script');
+    script.dataset.zone = zoneId;
+    script.src = scriptUrl;
+    script.async = true;
+    script.onerror = () => {
+      // Blocked or unreachable: nothing to do, the countdown still unlocks the pass.
+    };
+    (document.body || document.documentElement).appendChild(script);
+    thirdPartyAdLoaded = true;
+  } catch {
+    // ignore
+  }
+}
+
 export interface AdNetworkConfig {
   network: SupportedAdNetwork;
   zoneId?: string;
@@ -34,11 +64,11 @@ export interface RewardedAdCallbacks {
 }
 
 /**
- * Page-Visibility-aware 10-second rewarded ad timer.
+ * Page-Visibility-aware sponsor-break timer.
  * Automatically pauses countdown if the user switches browser tabs or minimizes the window.
  */
 export function playRewardedAdTimer({
-  durationSeconds = 10,
+  durationSeconds = PRODUCTION_AD_CONFIG.rewardedDurationSeconds,
   onProgress,
   onComplete,
   onFail,
@@ -96,7 +126,7 @@ export function playRewardedAdTimer({
 }
 
 /**
- * Sponsor campaigns rotated during the 10-second rewarded break
+ * Sponsor campaigns rotated during the sponsor break
  */
 export interface SponsorCampaign {
   id: string;

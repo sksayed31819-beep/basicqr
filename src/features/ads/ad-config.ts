@@ -13,14 +13,14 @@
  *
  * SUPPORTED INTEGRATION MODES:
  * 1. 'direct_sponsor' (Default):
- *    - Built-in 10-second sponsor break with visibility awareness (tab pause detection).
+ *    - Built-in sponsor break with visibility awareness (tab pause detection).
  *    - Requires zero external scripts, zero API keys, and has 100% uptime.
- *    - Fully compliant with AdSense and clean web standards.
  *
  * 2. 'monetag':
- *    - Monetag Rewarded Interstitial / In-Page Push.
- *    - Set `network: 'monetag'` and supply your Monetag `zoneId`.
- *    - Paste the snippet provided in your Monetag dashboard into index.html or set `scriptUrl`.
+ *    - Monetag Vignette banner (zone + script URL from your Monetag dashboard).
+ *    - The script is loaded ONLY when the user starts the export sponsor break,
+ *      never on normal page views.
+ *    - The export unlock never depends on the ad being served (ad-blockers are fine).
  *
  * 3. 'adsterra':
  *    - Adsterra Social Bar / Popunder / Rewarded banner.
@@ -44,13 +44,13 @@ export interface ProductionAdConfig {
 
   /**
    * Required duration (seconds) user must watch before the pass is unlocked.
-   * Recommended: 10 seconds.
+   * Currently: 15 seconds.
    */
   rewardedDurationSeconds: number;
 
   /**
    * Duration of the unlocked pass in minutes.
-   * Default: 10 minutes.
+   * Currently: 20 minutes.
    */
   passDurationMinutes: number;
 
@@ -95,16 +95,16 @@ export interface ProductionAdConfig {
  */
 export const PRODUCTION_AD_CONFIG: ProductionAdConfig = {
   // Switch to 'monetag', 'adsterra', or 'gpt' when you have approved publisher tags:
-  network: 'direct_sponsor',
+  network: 'monetag',
 
-  rewardedDurationSeconds: 10,
-  passDurationMinutes: 10,
+  rewardedDurationSeconds: 15,
+  passDurationMinutes: 20,
   downloadsPerPass: 2,
 
   monetag: {
-    // Paste your Monetag Zone ID here (e.g., '1234567')
-    zoneId: '',
-    scriptUrl: '',
+    // Monetag Vignette banner zone (from the Monetag dashboard tag)
+    zoneId: '12075715',
+    scriptUrl: 'https://n6wxm.com/vignette.min.js',
   },
 
   adsterra: {
@@ -119,7 +119,7 @@ export const PRODUCTION_AD_CONFIG: ProductionAdConfig = {
   },
 
   // If a 3rd party ad fails or is blocked by an ad-blocker, gracefully fall back
-  // to the 10-second sponsor card so the user can ALWAYS unlock their download!
+  // to the sponsor card so the user can ALWAYS unlock their download!
   fallbackToSponsorOnAdBlock: true,
 };
 

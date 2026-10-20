@@ -162,7 +162,7 @@ export const LegalComplianceModal: React.FC<LegalComplianceModalProps> = ({
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs">
                   <li>
-                    <strong className="text-token-primary">sessionStorage:</strong> Used solely to store the ephemeral state of your unlocked 10-minute 4K Export Pass (pass expiry timestamp and 2-download counter). This data automatically self-destructs when you close the browser tab.
+                    <strong className="text-token-primary">sessionStorage:</strong> Used solely to store the ephemeral state of your unlocked 20-minute 4K Export Pass (pass expiry timestamp and 2-download counter). This data automatically self-destructs when you close the browser tab.
                   </li>
                   <li>
                     <strong className="text-token-primary">Theme Preference:</strong> Light/Dark theme selection stored locally in your browser so your preferred view is maintained across visits.
@@ -278,10 +278,10 @@ export const LegalComplianceModal: React.FC<LegalComplianceModalProps> = ({
 
               <div className="space-y-2">
                 <h4 className="font-bold text-xs text-token-primary">
-                  The 10-Minute Export Pass
+                  The 20-Minute Export Pass
                 </h4>
                 <p className="text-xs">
-                  When you request an ultra-high-resolution 4K PNG, vector SVG, or 300-DPI print-ready PDF, you are presented with a 10-second sponsor break. Viewing this break unlocks an active Pass valid for 10 minutes with 2 free high-resolution downloads.
+                  When you request an ultra-high-resolution 4K PNG, vector SVG, or 300-DPI print-ready PDF, you are presented with a 15-second sponsor break. Completing this break unlocks an active Pass valid for 20 minutes with 2 free high-resolution downloads. The pass is granted when the countdown ends, whether or not an advertisement was displayed.
                 </p>
                 <p className="text-xs text-token-tertiary">
                   If you prefer not to view ads, standard 512px PNG downloads are permanently free, instant, and require no ads.
@@ -293,7 +293,7 @@ export const LegalComplianceModal: React.FC<LegalComplianceModalProps> = ({
                   Third-Party Ad Networks &amp; Consent
                 </h4>
                 <p className="text-xs">
-                  We work with advertising partners that comply with global advertising standards. These partners may use cookies to serve ads based on user visits to this and other websites. You may manage your cookie preferences through your browser settings or opt-out portals such as:
+                  Basic QR uses Monetag as its advertising partner. The Monetag script is loaded only when you start the export sponsor break, not during normal browsing. We never send your QR content to Monetag. Monetag and other advertising partners may use cookies to serve ads based on user visits to this and other websites. You may manage your cookie preferences through your browser settings or opt-out portals such as:
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs">
                   <li>

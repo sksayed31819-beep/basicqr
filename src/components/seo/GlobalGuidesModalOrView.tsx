@@ -50,9 +50,9 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: 'export-pass',
-    question: 'How does the free 10-minute 4K Export Pass work?',
+    question: 'How does the free 20-minute 4K Export Pass work?',
     answer:
-      'Basic QR is fully free and ad-supported. Watch an ad to unlock 2 high-resolution / vector downloads for 10 minutes. This instantly unlocks an active Pass granting 2 high-resolution downloads (4K PNG, vector SVG, or 300-DPI print-ready PDF) over a 10-minute window. Standard 512px PNG exports are always 100% unlimited without watching any ads.',
+      'Basic QR is fully free and ad-supported. Complete a short 15-second sponsor break to unlock 2 high-resolution / vector downloads for 20 minutes. This unlocks an active Pass granting 2 high-resolution downloads (4K PNG, vector SVG, or 300-DPI print-ready PDF) over a 20-minute window. Standard 512px PNG exports are always 100% unlimited without watching any ads.',
     category: 'export',
   },
   {

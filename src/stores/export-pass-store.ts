@@ -25,7 +25,7 @@ export interface ExportPassState {
 }
 
 const STORAGE_KEY = 'basicqr_export_pass_v1';
-export const PASS_DURATION_MS = 10 * 60 * 1000; // 10 minutes
+export const PASS_DURATION_MS = 20 * 60 * 1000; // 20 minutes
 export const DEFAULT_DOWNLOAD_CREDITS = 2; // 2 downloads
 
 interface StoredPassData {

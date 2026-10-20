@@ -19,10 +19,16 @@ import {
 import { useExportPassStore } from '../../stores/export-pass-store.ts';
 import {
   playRewardedAdTimer,
+  loadThirdPartyAdScript,
+  ACTIVE_AD_CONFIG,
   getRandomSponsorCampaign,
   type SponsorCampaign,
 } from '../../features/ads/ad-provider.ts';
 import { BrandLogo } from '../ui/BrandLogo.tsx';
+import { PRODUCTION_AD_CONFIG } from '../../features/ads/ad-config.ts';
+
+const BREAK_SECONDS = ACTIVE_AD_CONFIG.adDurationSeconds;
+const PASS_MINUTES = PRODUCTION_AD_CONFIG.passDurationMinutes;
 
 interface AdUnlockModalProps {
   isOpen: boolean;
@@ -39,7 +45,7 @@ export const AdUnlockModal: React.FC<AdUnlockModalProps> = ({
 }) => {
   const { status, setStatus, unlockPass } = useExportPassStore();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [secondsRemaining, setSecondsRemaining] = useState(10);
+  const [secondsRemaining, setSecondsRemaining] = useState(BREAK_SECONDS);
   const [isTabPaused, setIsTabPaused] = useState(false);
   const [activeCampaign, setActiveCampaign] = useState<SponsorCampaign>(getRandomSponsorCampaign());
   const [isCompleted, setIsCompleted] = useState(false);
@@ -54,7 +60,7 @@ export const AdUnlockModal: React.FC<AdUnlockModalProps> = ({
       }
       setIsPlaying(false);
       setIsCompleted(false);
-      setSecondsRemaining(10);
+      setSecondsRemaining(BREAK_SECONDS);
       setIsTabPaused(false);
     } else {
       setActiveCampaign(getRandomSponsorCampaign());
@@ -64,11 +70,14 @@ export const AdUnlockModal: React.FC<AdUnlockModalProps> = ({
   const handleStartAd = () => {
     setIsPlaying(true);
     setStatus('ad_playing');
-    setSecondsRemaining(10);
+    setSecondsRemaining(BREAK_SECONDS);
     setIsTabPaused(false);
 
+    // Load the sponsor script only now, when the user asked to export.
+    loadThirdPartyAdScript();
+
     cleanupRef.current = playRewardedAdTimer({
-      durationSeconds: 10,
+      durationSeconds: BREAK_SECONDS,
       onProgress: (remaining, paused) => {
         setSecondsRemaining(remaining);
         setIsTabPaused(paused);
@@ -126,7 +135,7 @@ export const AdUnlockModal: React.FC<AdUnlockModalProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-400 font-bold border border-purple-500/30 uppercase tracking-wider">
-                  Rewarded Ad
+                  Sponsor Break
                 </span>
                 <span className="text-xs text-token-tertiary">
                   Unlocking 4K Downloads
@@ -148,7 +157,7 @@ export const AdUnlockModal: React.FC<AdUnlockModalProps> = ({
             <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
               <div
                 className="h-full bg-purple-600 transition-all duration-1000 ease-linear rounded-full"
-                style={{ width: `${((10 - secondsRemaining) / 10) * 100}%` }}
+                style={{ width: `${((BREAK_SECONDS - secondsRemaining) / BREAK_SECONDS) * 100}%` }}
               />
             </div>
 
@@ -211,7 +220,7 @@ export const AdUnlockModal: React.FC<AdUnlockModalProps> = ({
               Pass Active: 2 Downloads Unlocked!
             </h3>
             <p className="text-xs text-token-secondary max-w-xs">
-              You now have 10 minutes of high-resolution 4K, Vector SVG, and PDF exports.
+              You now have {PASS_MINUTES} minutes of high-resolution 4K, Vector SVG, and PDF exports.
             </p>
           </div>
         ) : (
@@ -233,7 +242,7 @@ export const AdUnlockModal: React.FC<AdUnlockModalProps> = ({
 
             <div className="p-3.5 rounded-xl studio-surface border studio-border space-y-2 text-xs">
               <p className="text-token-secondary leading-relaxed">
-                Watch an ad to unlock <strong className="text-token-primary">2 high-resolution / vector downloads for 10 minutes</strong>. No subscription or credit card required.
+                Take a short sponsor break to unlock <strong className="text-token-primary">2 high-resolution / vector downloads for {PASS_MINUTES} minutes</strong>. No subscription or credit card required.
               </p>
 
               <div className="grid grid-cols-3 gap-2 pt-1 text-[11px] font-medium text-purple-300">
@@ -256,7 +265,7 @@ export const AdUnlockModal: React.FC<AdUnlockModalProps> = ({
               className="w-full py-3 px-4 rounded-xl font-bold text-sm bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center gap-2 shadow-lg shadow-purple-600/30 transition-all cursor-pointer active:scale-98"
             >
               <Play className="w-4 h-4 fill-current" />
-              <span>Watch Ad &amp; Unlock (2 Downloads)</span>
+              <span>Start Sponsor Break &amp; Unlock (2 Downloads)</span>
             </button>
 
             {/* Secondary Option: Always-free 512px */}

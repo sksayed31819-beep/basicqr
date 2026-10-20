@@ -15,7 +15,7 @@ test('initial state defaults to locked with 0 downloads', () => {
   assert.equal(state.hasActivePass(), false);
 });
 
-test('unlockPass initializes 2 download credits and active 10-min timestamp', () => {
+test('unlockPass initializes 2 download credits and active 20-min timestamp', () => {
   useExportPassStore.getState().unlockPass();
   const state = useExportPassStore.getState();
 
