@@ -5,6 +5,7 @@
 
 @import "tailwindcss";
 @import "./styles/tokens.css";
+@import "./styles/landing.css";
 
 /* Make every dark: utility follow the theme switch (data-theme), not the OS setting */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -89,14 +90,79 @@
 }
 
 /* ------------------------------------------------------------------
- * Light theme: remap the pastel "dark UI" status colors to deep,
- * readable ones (text) and clearly tinted chips (backgrounds/borders).
+ * Brand re-theme: the studio was built with purple utility classes.
+ * Map them all to the teal brand tokens so every panel, tab and chip
+ * follows the new design system in both themes.
  * Unlayered on purpose so it wins over Tailwind utilities.
  * ------------------------------------------------------------------ */
-[data-theme='light'] :is(.text-purple-200, .text-purple-300, .text-purple-400, .text-purple-500, .text-purple-600, .text-purple-700, .hover\:text-purple-400:hover, .hover\:text-purple-600:hover) {
+:is(
+  .text-purple-200, .text-purple-300, .text-purple-400, .text-purple-500, .text-purple-600, .text-purple-700,
+  .text-purple-300\/80,
+  .hover\:text-purple-300:hover, .hover\:text-purple-400:hover, .hover\:text-purple-600:hover,
+  .group:hover .group-hover\:text-purple-600,
+  .dark\:text-purple-300, .dark\:text-purple-400,
+  .dark\:hover\:text-purple-400:hover, .dark\:group-hover\:text-purple-400
+) {
   color: var(--accent-text);
 }
 
+:is(.bg-purple-600, .bg-purple-500) {
+  background-color: var(--accent);
+}
+
+:is(.hover\:bg-purple-500:hover, .hover\:bg-purple-700:hover) {
+  background-color: var(--accent-hover);
+}
+
+:is(
+  .bg-purple-600\/15, .bg-purple-500\/15, .bg-purple-500\/10,
+  .hover\:bg-purple-500\/5:hover, .hover\:bg-purple-600\/10:hover
+) {
+  background-color: var(--accent-tint-bg);
+}
+
+:is(
+  .border-purple-400, .border-purple-500,
+  .focus\:border-purple-500:focus,
+  .hover\:border-purple-400\/40:hover, .hover\:border-purple-400\/50:hover,
+  .hover\:border-purple-500\/60:hover, .hover\:border-purple-500\/50:hover, .hover\:border-purple-500\/30:hover
+) {
+  border-color: var(--accent);
+}
+
+.border-purple-500\/30 {
+  border-color: var(--accent-tint-border);
+}
+
+:is(.ring-purple-500, .ring-purple-500\/40, .focus\:ring-purple-500:focus) {
+  --tw-ring-color: var(--accent);
+}
+
+:is(.shadow-purple-600\/30, .shadow-purple-500\/20) {
+  --tw-shadow-color: rgba(14, 124, 134, 0.3);
+}
+
+.to-purple-600 {
+  --tw-gradient-to: var(--accent);
+}
+
+.accent-purple-600 {
+  accent-color: var(--accent);
+}
+
+/* The single coral conversion button */
+.cta-coral {
+  background-color: var(--cta);
+  color: #FFFFFF;
+}
+
+.cta-coral:hover {
+  background-color: var(--cta-hover);
+}
+
+/* ------------------------------------------------------------------
+ * Light theme: readable status colors and clearly tinted chips
+ * ------------------------------------------------------------------ */
 [data-theme='light'] :is(.text-emerald-300, .text-emerald-400, .text-emerald-500, .text-emerald-600, .text-emerald-700, .hover\:text-emerald-600:hover) {
   color: var(--success);
 }
@@ -113,7 +179,6 @@
   color: var(--text-secondary);
 }
 
-/* Tinted status chips */
 [data-theme='light'] :is(.bg-emerald-500\/10, .bg-emerald-500\/15, .bg-emerald-500\/20) {
   background-color: var(--success-bg);
 }
@@ -122,9 +187,6 @@
 }
 [data-theme='light'] :is(.bg-rose-500\/10) {
   background-color: var(--danger-bg);
-}
-[data-theme='light'] :is(.bg-purple-500\/5, .bg-purple-500\/10, .bg-purple-500\/15, .bg-purple-600\/15) {
-  background-color: #EDE9FE;
 }
 
 [data-theme='light'] :is(.border-emerald-500\/30, .border-emerald-500\/35, .border-emerald-500\/40) {
@@ -136,9 +198,6 @@
 [data-theme='light'] :is(.border-rose-500\/30) {
   border-color: #FDA4AF;
 }
-[data-theme='light'] :is(.border-purple-500\/25, .border-purple-500\/30, .border-purple-400\/40, .border-purple-400\/50) {
-  border-color: #C4B5FD;
-}
 
 /* Surfaces that were hard-coded dark */
 [data-theme='light'] :is(.bg-slate-900, .bg-slate-900\/40, .bg-slate-900\/60) {
@@ -149,13 +208,9 @@
   background-color: var(--surface-hover);
 }
 
-/* Give cards clear edges and a little depth so the light theme does not look flat */
+/* Clear card edges, flat otherwise (design system: no heavy shadows) */
 [data-theme='light'] .studio-surface {
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
-}
-
-[data-theme='light'] .studio-panel {
-  box-shadow: 0 1px 1px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 1px 2px rgba(22, 25, 28, 0.06);
 }
 
 /* Inputs: visible edge, clearer focus */
@@ -165,21 +220,21 @@
 
 [data-theme='light'] :is(input, textarea, select):focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.15);
+  box-shadow: 0 0 0 3px rgba(14, 124, 134, 0.18);
 }
 
 [data-theme='light'] ::placeholder {
-  color: #64748B;
+  color: #6B7076;
 }
 
 /* Modal scrim */
 [data-theme='light'] :is(.bg-black\/75, .bg-black\/80) {
-  background-color: rgba(15, 23, 42, 0.55);
+  background-color: rgba(22, 25, 28, 0.55);
 }
 
 /* Keyboard focus ring everywhere */
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-text);
   outline-offset: 2px;
 }
 
@@ -187,10 +242,6 @@
 [data-theme='light'] [data-theme='dark'] {
   background-color: var(--app-bg);
   color: var(--text-primary);
-}
-
-[data-theme='light'] [data-theme='dark'] :is(.text-purple-300, .text-purple-400, .hover\:text-purple-300:hover) {
-  color: #A78BFA;
 }
 
 [data-theme='light'] [data-theme='dark'] :is(.text-emerald-400) {
@@ -203,12 +254,4 @@
 
 [data-theme='light'] [data-theme='dark'] :is(.text-rose-400) {
   color: #FB7185;
-}
-
-[data-theme='light'] [data-theme='dark'] :is(.bg-purple-500\/15) {
-  background-color: rgba(139, 92, 246, 0.15);
-}
-
-[data-theme='light'] [data-theme='dark'] :is(.border-purple-500\/30) {
-  border-color: rgba(139, 92, 246, 0.3);
 }

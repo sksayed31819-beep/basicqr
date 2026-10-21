@@ -5,20 +5,26 @@
 
 :root,
 [data-theme='dark'] {
-  /* Dark Studio Theme */
-  --app-bg: #0B0D12;
-  --panel-bg: #11141C;
-  --surface-bg: #191E29;
-  --surface-hover: #222938;
-  --border: #2A3140;
-  --border-subtle: #1E2330;
-  --accent: #8B5CF6;
-  --accent-hover: #A78BFA;
-  --accent-light: rgba(139, 92, 246, 0.15);
-  --text-primary: #F3F4F6;
-  --text-secondary: #9CA3AF;
-  --text-tertiary: #8A94A6;
-  --accent-text: #A78BFA;
+  /* Dark Studio Theme (charcoal panels, teal brand) */
+  --app-bg: #0F1215;
+  --panel-bg: #16191C;
+  --surface-bg: #1E2327;
+  --surface-hover: #283036;
+  --border: #353D44;
+  --border-subtle: #262C31;
+  --accent: #0E7C86;
+  --accent-hover: #0B6A73;
+  --accent-light: rgba(30, 191, 191, 0.14);
+  --accent-text: #3FD6D0;
+  --accent-tint-bg: rgba(30, 191, 191, 0.14);
+  --accent-tint-border: rgba(30, 191, 191, 0.38);
+  --text-primary: #F3F5F6;
+  --text-secondary: #B4BCC2;
+  --text-tertiary: #8F99A1;
+
+  /* Conversion color (one primary action per view) */
+  --cta: #FA3556;
+  --cta-hover: #E22A49;
 
   /* Semantic */
   --success: #10B981;
@@ -29,31 +35,47 @@
   --danger-bg: rgba(239, 68, 68, 0.12);
 
   /* Corner Radii */
-  --radius-input-sm: 6px;
-  --radius-button: 10px;
-  --radius-card: 14px;
+  --radius-input-sm: 8px;
+  --radius-button: 12px;
+  --radius-card: 16px;
   --radius-preview: 20px;
   --radius-dialog: 24px;
 
-  /* Fonts */
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Fonts: Inter only */
+  --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Landing page tokens */
+  --lp-canvas: #0F1215;
+  --lp-card: #16191C;
+  --lp-text: #F3F5F6;
+  --lp-muted: #A3ACB3;
+  --lp-line: #2C3338;
+  --lp-tint: #11262A;
+  --lp-panel: #1A1F23;
+  --lp-panel-2: #232A2F;
+  --lp-teal: #1EBFBF;
 }
 
 [data-theme='light'] {
-  --app-bg: #E6EAF2;
+  --app-bg: #F2F4F6;
   --panel-bg: #FFFFFF;
-  --surface-bg: #EEF1F7;
-  --surface-hover: #DDE3EE;
-  --border: #A9B5C6;
-  --border-subtle: #CBD3E0;
-  --accent: #6D28D9;
-  --accent-hover: #5B21B6;
-  --accent-text: #5B21B6;
-  --accent-light: rgba(109, 40, 217, 0.10);
-  --text-primary: #0F172A;
-  --text-secondary: #334155;
-  --text-tertiary: #475569;
+  --surface-bg: #F6F7F8;
+  --surface-hover: #E8EBEE;
+  --border: #B9BEC4;
+  --border-subtle: #DADADD;
+  --accent: #0E7C86;
+  --accent-hover: #0B6A73;
+  --accent-text: #0B6F78;
+  --accent-light: rgba(14, 124, 134, 0.10);
+  --accent-tint-bg: #E3F5F6;
+  --accent-tint-border: #9FD8DA;
+  --text-primary: #16191C;
+  --text-secondary: #393E41;
+  --text-tertiary: #5B6065;
+
+  --cta: #FA3556;
+  --cta-hover: #E22A49;
 
   /* Semantic */
   --success: #065F46;
@@ -62,4 +84,14 @@
   --warning-bg: #FEF3C7;
   --danger: #BE123C;
   --danger-bg: #FFE4E6;
+
+  --lp-canvas: #F9F9F9;
+  --lp-card: #FFFFFF;
+  --lp-text: #16191C;
+  --lp-muted: #5B6065;
+  --lp-line: #DADADD;
+  --lp-tint: #E8F7F8;
+  --lp-panel: #16191C;
+  --lp-panel-2: #1E2327;
+  --lp-teal: #1EBFBF;
 }

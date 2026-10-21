@@ -96,7 +96,7 @@ export const TopToolbar: React.FC = () => {
         <button
           type="button"
           onClick={() => setIsExportModalOpen(true)}
-          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-xs md:text-sm font-semibold bg-purple-600 hover:bg-purple-500 text-white shadow-sm shadow-purple-600/30 transition-all cursor-pointer active:scale-95 whitespace-nowrap shrink-0"
+          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-xs md:text-sm font-semibold cta-coral text-white shadow-sm  transition-all cursor-pointer active:scale-95 whitespace-nowrap shrink-0"
         >
           <Download className="w-3.5 h-3.5 shrink-0" />
           <span className="hidden md:inline">Export 4K / Vector</span>
