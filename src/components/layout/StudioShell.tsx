@@ -400,8 +400,11 @@ export const StudioShell: React.FC = () => {
       {/* MOBILE EXPANDED FULL-SIZE PREVIEW MODAL */}
       {/* ============================================================== */}
       {isMobilePreviewExpanded && (
-        <div data-theme="dark" className="lg:hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-md flex flex-col animate-fade-in p-4 overflow-y-auto">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div
+          className="lg:hidden fixed inset-0 z-40 backdrop-blur-md flex flex-col animate-fade-in p-4 overflow-y-auto"
+          style={{ backgroundColor: 'color-mix(in srgb, var(--app-bg) 96%, transparent)' }}
+        >
+          <div className="flex items-center justify-between pb-3 border-b studio-border">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-token-primary">
                 Full-Size Preview

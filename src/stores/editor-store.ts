@@ -319,7 +319,7 @@ useEditorStore.subscribe((state) => {
           dataType: state.dataType,
           payloads: state.payloads,
           style: state.style,
-          logo: state.logo,
+          logo: { ...state.logo, rawSrc: undefined },
           frame: state.frame,
           exportConfig: state.exportConfig,
         })

@@ -206,7 +206,7 @@ export function processLogoImage(
 
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      const size = 512;
+      const size = 1024; // high-res so logos stay sharp in 4K exports
       canvas.width = size;
       canvas.height = size;
       const ctx = canvas.getContext('2d');

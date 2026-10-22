@@ -49,9 +49,9 @@ export const LogoPanel: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 2MB size limit check
-    if (file.size > 2 * 1024 * 1024) {
-      setErrorMessage('File size exceeds 2MB limit. Please upload an image under 2MB.');
+    // 20MB size limit check (images are downscaled in the browser before use)
+    if (file.size > 20 * 1024 * 1024) {
+      setErrorMessage('File size exceeds the 20MB limit. Please upload an image under 20MB.');
       return;
     }
 
@@ -150,7 +150,7 @@ export const LogoPanel: React.FC = () => {
                   Active Logo Loaded
                 </span>
                 <span className="text-[11px] text-token-tertiary">
-                  Click to replace image (PNG, JPG, WebP, SVG &lt; 2MB)
+                  Click to replace image (PNG, JPG, WebP, SVG up to 20MB)
                 </span>
               </div>
             </div>
@@ -164,7 +164,7 @@ export const LogoPanel: React.FC = () => {
                   Click or drag image here
                 </span>
                 <span className="text-[10px] text-token-tertiary">
-                  PNG, JPG, WebP, SVG up to 2MB (100% client-side)
+                  PNG, JPG, WebP, SVG up to 20MB (100% client-side)
                 </span>
               </div>
             </>
