@@ -19,6 +19,7 @@ import {
   PhoneCall,
   Printer,
   ScanLine,
+  Sparkles,
   Wifi,
 } from 'lucide-react';
 import { useEditorStore } from '../../stores/editor-store.ts';
@@ -56,39 +57,6 @@ const FAQS: { q: string; a: string }[] = [
   },
 ];
 
-const FEATURES = [
-  {
-    icon: Download,
-    title: '4K PNG and vector SVG',
-    text: 'Sharp at any size. Export a 4K PNG for screens or a scalable SVG for printers and designers.',
-  },
-  {
-    icon: Printer,
-    title: 'Print-ready PDF',
-    text: 'Get an A4 PDF with clean margins, ready for flyers, stickers, menus and table tents.',
-  },
-  {
-    icon: Palette,
-    title: 'Your brand, your style',
-    text: 'Custom colors, gradients, dot shapes, corner styles, logos and frames, plus 15 ready-made presets.',
-  },
-  {
-    icon: ScanLine,
-    title: 'Live scan check',
-    text: 'See a real decode test and a contrast rating while you design, before you print anything.',
-  },
-  {
-    icon: Lock,
-    title: 'Private by design',
-    text: 'Your QR content is generated in your browser. No account is needed to create or download.',
-  },
-  {
-    icon: Wifi,
-    title: 'More than links',
-    text: 'Wi-Fi, contact cards, email, phone, WhatsApp and plain text, all in one studio.',
-  },
-];
-
 const TYPES: { type: QrDataType; icon: React.ElementType; title: string; text: string }[] = [
   { type: 'url', icon: Globe, title: 'Website URL', text: 'Links, landing pages, menus' },
   { type: 'wifi', icon: Wifi, title: 'Wi-Fi network', text: 'One-tap network join' },
@@ -97,6 +65,60 @@ const TYPES: { type: QrDataType; icon: React.ElementType; title: string; text: s
   { type: 'email', icon: Mail, title: 'Email', text: 'Pre-filled subject and body' },
   { type: 'phone', icon: PhoneCall, title: 'Phone / WhatsApp', text: 'Direct call or chat' },
 ];
+
+/** Small seeded random generator so the decorative QR art is stable between renders. */
+function mulberry32(seed: number) {
+  let a = seed;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Decorative QR-style artwork (not a scannable code). */
+const QrArt: React.FC<{ seed: number; from: string; to: string }> = ({ seed, from, to }) => {
+  const gid = 'qa' + React.useId().replace(/[^a-zA-Z0-9]/g, '');
+  const n = 25;
+  const rand = mulberry32(seed);
+  const inFinder = (r: number, c: number) =>
+    (r < 8 && c < 8) || (r < 8 && c >= n - 8) || (r >= n - 8 && c < 8);
+
+  const dots: React.ReactElement[] = [];
+  for (let r = 0; r < n; r++) {
+    for (let c = 0; c < n; c++) {
+      if (inFinder(r, c)) continue;
+      if (rand() > 0.5) {
+        dots.push(<rect key={r + '-' + c} x={c + 0.1} y={r + 0.1} width={0.8} height={0.8} rx={0.32} />);
+      }
+    }
+  }
+
+  const finder = (x: number, y: number, key: string) => (
+    <g key={key} transform={`translate(${x} ${y})`}>
+      <rect x={0.6} y={0.6} width={5.8} height={5.8} rx={1.7} fill="none" strokeWidth={1.2} stroke={`url(#${gid})`} />
+      <rect x={2.1} y={2.1} width={2.8} height={2.8} rx={0.9} />
+    </g>
+  );
+
+  return (
+    <svg viewBox={`0 0 ${n} ${n}`} aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id={gid} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2={n} y2={n}>
+          <stop offset="0" stopColor={from} />
+          <stop offset="1" stopColor={to} />
+        </linearGradient>
+      </defs>
+      <g fill={`url(#${gid})`}>
+        {dots}
+        {finder(0, 0, 'tl')}
+        {finder(n - 7, 0, 'tr')}
+        {finder(0, n - 7, 'bl')}
+      </g>
+    </svg>
+  );
+};
 
 function scrollToStudio() {
   if (typeof window === 'undefined') return;
@@ -125,126 +147,178 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="lp" id="learn">
-      {/* Scroll cue (sits right under the studio) */}
-      <a className="lp-cue" href="#features">
+      <a className="lp-cue" href="#overview">
         <span>
-          <strong>Free</strong> · No sign-up · Runs in your browser
+          <b>Free</b> · No sign-up · Runs in your browser
         </span>
-        <span aria-hidden="true">·</span>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          Learn more <ArrowDown size={14} />
+          Learn more <ArrowDown size={14} aria-hidden="true" />
         </span>
       </a>
 
-      {/* HERO (dark card) */}
-      <div className="lp-wrap">
-        <header className="lp-hero">
-          <div>
-            <p className="lp-eyebrow">Free QR code studio</p>
-            <h1 className="lp-h1">Free QR code generator for 4K, SVG and print.</h1>
-            <p className="lp-lead">Design a QR code that looks like your brand and scans every time.</p>
-            <ul className="lp-checks">
-              {[
-                'No sign-up and no expiry on your QR codes',
-                '4K PNG, vector SVG and print-ready PDF',
-                'Logos, colors, frames and 15 design presets',
-                'Generated in your browser, so your content stays with you',
-              ].map((t) => (
-                <li key={t}>
-                  <Check size={16} aria-hidden="true" />
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ul>
-            <button type="button" className="lp-btn lp-btn-coral" onClick={scrollToStudio}>
+      {/* HERO */}
+      <section className="lp-hero" id="overview">
+        <div className="lp-wrap">
+          <div className="lp-badge">
+            <i aria-hidden="true" />
+            Free QR code studio
+          </div>
+          <h1 className="lp-h1">
+            The free QR code generator for <span className="lp-grad-text">4K, SVG and print.</span>
+          </h1>
+          <p className="lp-lead">
+            Design a QR code that matches your brand and scans every time. Add your logo, pick your colors, check
+            it live and download it in the quality you need.
+          </p>
+          <div className="lp-actions">
+            <button type="button" className="lp-btn lp-btn-primary" onClick={scrollToStudio}>
               Create your QR code <ArrowRight size={18} aria-hidden="true" />
             </button>
+            <a className="lp-btn lp-btn-ghost" href="#how">
+              See how it works
+            </a>
           </div>
+          <p className="lp-micro">No sign-up · No expiry on your codes · Your content stays in your browser</p>
 
-          <div className="lp-hero-art">
-            <div className="lp-art-card">
-              <img src="/logo-mark.png" alt="Basic QR logo" width="220" height="220" loading="lazy" />
-              <div className="lp-art-tags">
-                <span>PNG 4K</span>
-                <span>SVG</span>
-                <span>PDF</span>
-                <span>Wi-Fi</span>
-                <span>vCard</span>
-              </div>
+          <div className="lp-showcase">
+            <div className="lp-qrcard left">
+              <QrArt seed={11} from="#0ea5e9" to="#2563eb" />
+              <span>WI-FI</span>
+            </div>
+            <div className="lp-qrcard mid">
+              <QrArt seed={7} from="#2563eb" to="#7c3aed" />
+              <span>SCAN ME</span>
+            </div>
+            <div className="lp-qrcard right">
+              <QrArt seed={23} from="#7c3aed" to="#db2777" />
+              <span>VCARD</span>
             </div>
           </div>
-        </header>
-      </div>
+        </div>
+      </section>
 
-      {/* FEATURES (light cards) */}
-      <section className="lp-section" id="features" style={{ paddingTop: 64 }}>
+      {/* FORMAT STRIP */}
+      <section style={{ paddingBottom: 8 }}>
         <div className="lp-wrap">
-          <div className="lp-center">
+          <div className="lp-strip">
+            <div>
+              <b>4K PNG</b>
+              <span>Sharp on any screen</span>
+            </div>
+            <div>
+              <b>Vector SVG</b>
+              <span>Scales without limits</span>
+            </div>
+            <div>
+              <b>Print PDF</b>
+              <span>A4, clean margins</span>
+            </div>
+            <div>
+              <b>15 presets</b>
+              <span>One-click designs</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section className="lp-section" id="features">
+        <div className="lp-wrap">
+          <div className="lp-head">
+            <span className="lp-kicker">Why Basic QR</span>
             <h2 className="lp-h2">Everything you need for a QR code people actually scan</h2>
-            <p className="lp-sub">
-              A focused design studio, not a maze of upsells. Build it, check it, export it.
-            </p>
+            <p className="lp-sub">A focused design studio. Build it, check it, export it.</p>
           </div>
-          <div className="lp-grid lp-grid-3">
-            {FEATURES.map(({ icon: Icon, title, text }) => (
-              <article className="lp-card" key={title}>
-                <div className="lp-icon">
-                  <Icon size={24} aria-hidden="true" />
-                </div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
+          <div className="lp-bento">
+            <article className="lp-card glow lp-span2">
+              <div className="lp-ico">
+                <Download size={22} aria-hidden="true" />
+              </div>
+              <h3>Export in the format your job needs</h3>
+              <p>
+                Download a 4K PNG for screens, a scalable SVG for printers and designers, or an A4 PDF ready for
+                flyers, stickers, menus and table tents.
+              </p>
+              <div className="lp-chips">
+                <span>PNG 4K</span>
+                <span>SVG vector</span>
+                <span>PDF A4</span>
+                <span>Standard PNG free</span>
+              </div>
+            </article>
+            <article className="lp-card">
+              <div className="lp-ico">
+                <ScanLine size={22} aria-hidden="true" />
+              </div>
+              <h3>Live scan check</h3>
+              <p>See a real decode test and a contrast rating while you design, before you print anything.</p>
+            </article>
+            <article className="lp-card">
+              <div className="lp-ico">
+                <Palette size={22} aria-hidden="true" />
+              </div>
+              <h3>Your brand, your style</h3>
+              <p>Custom colors, gradients, dot and corner shapes, logos and frames with your own call to action.</p>
+            </article>
+            <article className="lp-card">
+              <div className="lp-ico">
+                <Sparkles size={22} aria-hidden="true" />
+              </div>
+              <h3>15 ready-made presets</h3>
+              <p>Start from a polished design for cafes, events, business cards and more, then make it yours.</p>
+            </article>
+            <article className="lp-card">
+              <div className="lp-ico">
+                <Lock size={22} aria-hidden="true" />
+              </div>
+              <h3>Private by design</h3>
+              <p>Your QR content is generated in your browser. No account is needed to create or download.</p>
+            </article>
           </div>
         </div>
       </section>
 
-      {/* HOW IT WORKS (tinted wash) */}
-      <section className="lp-section" id="how">
+      {/* HOW IT WORKS */}
+      <section className="lp-section" id="how" style={{ paddingTop: 8 }}>
         <div className="lp-wrap">
-          <div className="lp-wash">
-            <div className="lp-center">
-              <h2 className="lp-h2">How to make a QR code in three steps</h2>
-              <p className="lp-sub">It takes about a minute.</p>
+          <div className="lp-head">
+            <span className="lp-kicker">How it works</span>
+            <h2 className="lp-h2">Make a QR code in three steps</h2>
+            <p className="lp-sub">It takes about a minute.</p>
+          </div>
+          <div className="lp-steps">
+            <div className="lp-step">
+              <b>01</b>
+              <h3>Choose what to encode</h3>
+              <p>Pick a link, Wi-Fi, contact card, email, phone number or plain text and fill in the details.</p>
             </div>
-            <div className="lp-steps">
-              <div className="lp-step">
-                <div className="lp-step-num">1</div>
-                <h3>Choose what to encode</h3>
-                <p>Pick a website link, Wi-Fi, contact card, email, phone number or plain text and fill in the details.</p>
-              </div>
-              <div className="lp-step">
-                <div className="lp-step-num">2</div>
-                <h3>Style it</h3>
-                <p>Change colors, shapes and frame, add your logo, or start from one of the ready-made presets.</p>
-              </div>
-              <div className="lp-step">
-                <div className="lp-step-num">3</div>
-                <h3>Check and export</h3>
-                <p>Watch the live scan check, then download PNG, SVG or PDF in the quality you need.</p>
-              </div>
+            <div className="lp-step">
+              <b>02</b>
+              <h3>Style it</h3>
+              <p>Change colors, shapes and frame, add your logo, or start from one of the presets.</p>
             </div>
-            <div className="lp-cta-row">
-              <button type="button" className="lp-btn lp-btn-dark lp-pill" onClick={scrollToStudio}>
-                Start designing
-              </button>
+            <div className="lp-step">
+              <b>03</b>
+              <h3>Check and export</h3>
+              <p>Watch the live scan check, then download PNG, SVG or PDF in the quality you need.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* QR TYPES */}
-      <section className="lp-section" id="types">
+      {/* TYPES */}
+      <section className="lp-section" id="types" style={{ paddingTop: 8 }}>
         <div className="lp-wrap">
-          <div className="lp-center">
-            <h2 className="lp-h2">Pick a QR code type and start</h2>
+          <div className="lp-head">
+            <span className="lp-kicker">QR code types</span>
+            <h2 className="lp-h2">Pick a type and start designing</h2>
             <p className="lp-sub">Tap a type to jump back into the studio with it selected.</p>
           </div>
           <div className="lp-types">
             {TYPES.map(({ type, icon: Icon, title, text }) => (
               <button type="button" className="lp-type" key={type} onClick={() => startWithType(type)}>
-                <span className="lp-icon">
-                  <Icon size={22} aria-hidden="true" />
+                <span className="lp-ico">
+                  <Icon size={20} aria-hidden="true" />
                 </span>
                 <span className="lp-type-text">
                   <strong>{title}</strong>
@@ -256,10 +330,10 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* PRIVACY (dark panel) */}
-      <section className="lp-section">
+      {/* PRIVACY */}
+      <section className="lp-section" style={{ paddingTop: 8 }}>
         <div className="lp-wrap">
-          <div className="lp-panel">
+          <div className="lp-priv">
             <div>
               <h2>Your content stays in your browser</h2>
               <p>
@@ -278,7 +352,7 @@ export const LandingPage: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <button type="button" className="lp-btn lp-btn-ghost lp-pill" onClick={() => setIsLegalModalOpen(true)}>
+              <button type="button" className="lp-btn lp-btn-ghost" onClick={() => setIsLegalModalOpen(true)}>
                 Read the privacy details
               </button>
             </div>
@@ -301,9 +375,10 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* FAQ */}
-      <section className="lp-section" id="faq" style={{ paddingTop: 48 }}>
+      <section className="lp-section" id="faq">
         <div className="lp-wrap">
-          <div className="lp-center">
+          <div className="lp-head">
+            <span className="lp-kicker">FAQ</span>
             <h2 className="lp-h2">Frequently asked questions</h2>
           </div>
           <div className="lp-faq">
@@ -317,24 +392,30 @@ export const LandingPage: React.FC = () => {
               </details>
             ))}
           </div>
-          <div className="lp-cta-row">
-            <button type="button" className="lp-btn lp-btn-dark lp-pill" onClick={() => setIsGuidesModalOpen(true)}>
-              More guides and answers
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section style={{ paddingBottom: 56 }}>
+        <div className="lp-wrap">
+          <div className="lp-final">
+            <h2>Ready to make your QR code?</h2>
+            <p>Free, private and ready in a minute.</p>
+            <button type="button" className="lp-btn lp-btn-white" onClick={scrollToStudio}>
+              Open the studio <ArrowRight size={18} aria-hidden="true" />
             </button>
           </div>
         </div>
       </section>
 
-      {/* FOOTER (dark) */}
+      {/* FOOTER */}
       <footer className="lp-footer">
         <div className="lp-wrap">
           <div className="lp-footer-grid">
             <div>
               <span className="lp-brand">
                 <img src="/logo-mark.png" alt="" width="40" height="40" loading="lazy" />
-                <span>
-                  Basic <em>QR</em>
-                </span>
+                <span>Basic QR</span>
               </span>
               <p>Free QR code studio for 4K PNG, vector SVG and print-ready PDF.</p>
             </div>
@@ -385,10 +466,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </footer>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
     </div>
   );
 };

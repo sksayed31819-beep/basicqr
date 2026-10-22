@@ -139,7 +139,7 @@
 }
 
 :is(.shadow-purple-600\/30, .shadow-purple-500\/20) {
-  --tw-shadow-color: rgba(14, 124, 134, 0.3);
+  --tw-shadow-color: rgba(37, 99, 235, 0.3);
 }
 
 .to-purple-600 {
@@ -150,14 +150,14 @@
   accent-color: var(--accent);
 }
 
-/* The single coral conversion button */
-.cta-coral {
-  background-color: var(--cta);
+/* The single primary action: brand gradient button */
+.cta-brand {
+  background-image: var(--brand-gradient);
   color: #FFFFFF;
 }
 
-.cta-coral:hover {
-  background-color: var(--cta-hover);
+.cta-brand:hover {
+  background-image: var(--brand-gradient-hover);
 }
 
 /* ------------------------------------------------------------------
@@ -220,7 +220,7 @@
 
 [data-theme='light'] :is(input, textarea, select):focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(14, 124, 134, 0.18);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 [data-theme='light'] ::placeholder {
