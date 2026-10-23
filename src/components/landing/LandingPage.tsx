@@ -433,13 +433,19 @@ export const LandingPage: React.FC = () => {
                 <li>
                   <a href="#how">How it works</a>
                 </li>
+                <li>
+                  <a href="#faq">FAQ</a>
+                </li>
               </ul>
             </div>
             <div>
-              <h4>Help</h4>
+              <h4>Company</h4>
               <ul>
                 <li>
-                  <a href="#faq">FAQ</a>
+                  <a href="/about/">About</a>
+                </li>
+                <li>
+                  <a href="/contact/">Contact</a>
                 </li>
                 <li>
                   <button type="button" className="lp-link" onClick={() => setIsGuidesModalOpen(true)}>
@@ -452,9 +458,10 @@ export const LandingPage: React.FC = () => {
               <h4>Legal</h4>
               <ul>
                 <li>
-                  <button type="button" className="lp-link" onClick={() => setIsLegalModalOpen(true)}>
-                    Privacy and terms
-                  </button>
+                  <a href="/privacy/">Privacy Policy</a>
+                </li>
+                <li>
+                  <a href="/terms/">Terms of Use</a>
                 </li>
               </ul>
             </div>

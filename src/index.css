@@ -69,12 +69,12 @@
 }
 
 .studio-accent {
-  background-color: var(--accent);
+  background-image: var(--brand-gradient);
   color: #ffffff;
 }
 
 .studio-accent:hover {
-  background-color: var(--accent-hover);
+  background-image: var(--brand-gradient-hover);
 }
 
 .text-token-primary {
@@ -254,4 +254,60 @@
 
 [data-theme='light'] [data-theme='dark'] :is(.text-rose-400) {
   color: #FB7185;
+}
+
+/* ------------------------------------------------------------------
+ * Studio polish: glass header, glowing preview stage, readable type
+ * ------------------------------------------------------------------ */
+.studio-header {
+  background-color: color-mix(in srgb, var(--panel-bg) 84%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+.studio-stage {
+  background-color: var(--app-bg);
+  background-image:
+    radial-gradient(50% 45% at 50% 38%, rgba(37, 99, 235, 0.22), transparent 70%),
+    radial-gradient(34% 34% at 82% 12%, rgba(139, 92, 246, 0.16), transparent 70%),
+    radial-gradient(rgba(148, 163, 184, 0.16) 1px, transparent 1px);
+  background-size: auto, auto, 22px 22px;
+}
+
+[data-theme='light'] .studio-stage {
+  background-image:
+    radial-gradient(50% 45% at 50% 38%, rgba(37, 99, 235, 0.10), transparent 70%),
+    radial-gradient(34% 34% at 82% 12%, rgba(139, 92, 246, 0.08), transparent 70%),
+    radial-gradient(rgba(82, 96, 124, 0.20) 1px, transparent 1px);
+  background-size: auto, auto, 22px 22px;
+}
+
+/* Tiny labels were hard to read; lift them a little */
+.text-\[9px\] {
+  font-size: 11px;
+}
+
+.text-\[10px\] {
+  font-size: 12px;
+}
+
+.text-\[11px\] {
+  font-size: 12.5px;
+}
+
+/* Slim, quiet scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Smooth interaction feedback */
+button,
+a,
+input,
+textarea,
+select {
+  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
 }

@@ -188,7 +188,7 @@ export const StudioShell: React.FC = () => {
         {/* Customization Panel (Mobile: full-width flex-1; Desktop: 360px sidebar) */}
         <section
           aria-label="Customization Panel"
-          className="w-full lg:w-[360px] border-r border-[var(--border)] bg-[var(--panel-bg)] flex flex-col flex-1 min-h-0 overflow-y-auto px-4 pt-4 pb-6 lg:p-5"
+          className="w-full lg:w-[400px] border-r border-[var(--border)] bg-[var(--panel-bg)] flex flex-col flex-1 min-h-0 overflow-y-auto px-4 pt-4 pb-6 lg:p-5"
         >
           {activeRailTab === 'content' && <ContentPanel />}
           {activeRailTab === 'style' && <StylePanel />}
@@ -201,7 +201,7 @@ export const StudioShell: React.FC = () => {
         {/* Desktop Region 3: Flexible Sticky Preview Workspace (1024px+) */}
         <section
           aria-label="QR Code Preview Workspace"
-          className="hidden lg:flex flex-1 studio-surface flex-col items-center justify-between p-8 overflow-y-auto"
+          className="studio-stage hidden lg:flex flex-1 studio-surface flex-col items-center justify-between p-8 overflow-y-auto"
         >
           <div className="w-full max-w-[540px] flex flex-col items-center space-y-6 my-auto">
             {/* Desktop Scannability Status Banner */}

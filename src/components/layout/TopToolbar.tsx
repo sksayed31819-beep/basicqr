@@ -37,7 +37,7 @@ export const TopToolbar: React.FC = () => {
   const isPassActive = hasActivePass();
 
   return (
-    <header className="h-14 border-b border-[var(--border)] bg-[var(--panel-bg)] sticky top-0 z-40 px-3 sm:px-4 flex items-center justify-between w-full select-none shrink-0">
+    <header className="studio-header h-14 border-b border-[var(--border)] sticky top-0 z-40 px-3 sm:px-4 flex items-center justify-between w-full select-none shrink-0">
       {/* Left side: Official Neon Orbit Brand Logo & Styled Text */}
       <div className="flex items-center gap-2 min-w-0">
         <BrandLogo size={32} showText={true} />
