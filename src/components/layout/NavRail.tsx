@@ -37,7 +37,7 @@ export const NavRail: React.FC = () => {
   return (
     <aside
       aria-label="Studio Sections"
-      className="w-16 border-r studio-border studio-panel flex flex-col items-center py-4 gap-1.5 shrink-0 select-none z-20"
+      className="studio-card w-[84px] lg:border lg:rounded-3xl studio-border studio-panel flex flex-col items-center py-4 gap-2 shrink-0 select-none z-20"
     >
       {RAIL_ITEMS.map((item) => {
         const Icon = item.icon;
@@ -48,17 +48,14 @@ export const NavRail: React.FC = () => {
             type="button"
             onClick={() => setActiveRailTab(item.id)}
             title={item.label}
-            className={`w-12 h-13 rounded-xl flex flex-col items-center justify-center gap-1 transition-all cursor-pointer relative ${
+            className={`w-[68px] h-[64px] rounded-2xl flex flex-col items-center justify-center gap-1 transition-all cursor-pointer relative ${
               isActive
-                ? 'bg-purple-600/15 text-purple-600 dark:text-purple-400 font-bold'
+                ? 'studio-accent text-white font-bold shadow-lg'
                 : 'text-token-tertiary hover:text-token-primary hover:bg-[var(--surface-hover)]'
             }`}
           >
-            {isActive && (
-              <span className="absolute left-0 top-2 bottom-2 w-0.5 bg-purple-500 rounded-r" />
-            )}
             <Icon className="w-5 h-5" />
-            <span className="text-[10px] tracking-tight">{item.label}</span>
+            <span className="text-[11px] tracking-tight">{item.label}</span>
           </button>
         );
       })}

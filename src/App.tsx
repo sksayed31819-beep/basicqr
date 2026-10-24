@@ -27,9 +27,10 @@ export default function App() {
 
   return (
     <div className="min-h-dvh w-full flex flex-col studio-app">
+      <TopToolbar />
+
       {/* The studio fills the first screen; the landing sections follow below it */}
-      <div id="studio" className="h-dvh min-h-[560px] w-full flex flex-col overflow-hidden">
-        <TopToolbar />
+      <div id="studio" className="h-[calc(100dvh-56px)] min-h-[520px] w-full flex flex-col overflow-hidden">
         <StudioShell />
       </div>
 

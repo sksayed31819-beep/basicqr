@@ -311,3 +311,66 @@ select {
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
+
+/* ------------------------------------------------------------------
+ * One continuous page: the studio and the sections below share the
+ * same canvas, glow and card language (no seam between top and bottom).
+ * ------------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+}
+
+.studio-app {
+  background-color: var(--app-bg);
+  background-image:
+    radial-gradient(60% 42% at 50% 0%, rgba(37, 99, 235, 0.22), transparent 70%),
+    radial-gradient(34% 30% at 92% 8%, rgba(139, 92, 246, 0.18), transparent 70%),
+    radial-gradient(34% 30% at 4% 18%, rgba(37, 99, 235, 0.14), transparent 70%);
+  background-attachment: fixed;
+}
+
+[data-theme='light'] .studio-app {
+  background-image:
+    radial-gradient(60% 42% at 50% 0%, rgba(37, 99, 235, 0.10), transparent 70%),
+    radial-gradient(34% 30% at 92% 8%, rgba(139, 92, 246, 0.08), transparent 70%),
+    radial-gradient(34% 30% at 4% 18%, rgba(37, 99, 235, 0.06), transparent 70%);
+}
+
+.studio-card {
+  box-shadow: 0 24px 60px -34px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme='light'] .studio-card {
+  box-shadow: 0 16px 44px -28px rgba(15, 23, 42, 0.28);
+}
+
+/* The stage keeps its own glow but sits on the shared canvas */
+.studio-stage.studio-card {
+  background-color: color-mix(in srgb, var(--panel-bg) 55%, transparent);
+}
+
+.lp {
+  background: transparent;
+}
+
+.lp [id] {
+  scroll-margin-top: 72px;
+}
+
+/* Scroll cue becomes a small pill so there is no strip between studio and page */
+.lp-cue {
+  display: flex;
+  width: fit-content;
+  min-height: 0;
+  margin: 4px auto 0;
+  padding: 8px 18px;
+  border: 1px solid var(--lp-line);
+  border-radius: 999px;
+  background: var(--lp-card);
+}
+
+/* Panel headings a bit larger and calmer */
+h2.uppercase {
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}

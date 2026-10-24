@@ -43,6 +43,24 @@ export const TopToolbar: React.FC = () => {
         <BrandLogo size={32} showText={true} />
       </div>
 
+      {/* Site navigation (desktop): the same links lead to the sections below the studio */}
+      <nav aria-label="Site" className="hidden lg:flex items-center justify-center gap-1 flex-1 mx-4">
+        {[
+          { href: '#features', label: 'Features' },
+          { href: '#how', label: 'How it works' },
+          { href: '#faq', label: 'FAQ' },
+          { href: '/about/', label: 'About' },
+        ].map((l) => (
+          <a
+            key={l.href}
+            href={l.href}
+            className="px-3.5 py-2 rounded-lg text-sm font-semibold text-token-secondary hover:text-token-primary hover:bg-[var(--surface-hover)] no-underline"
+          >
+            {l.label}
+          </a>
+        ))}
+      </nav>
+
       {/* Right side: Actions row (Zero overflow on 320px-390px screens) */}
       <div className="flex items-center gap-1.5 shrink-0">
         {/* Pass Active Pill (Desktop/Tablet >=640px only; mobile shows it in Stage Bar) */}

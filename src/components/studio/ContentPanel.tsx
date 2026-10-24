@@ -65,15 +65,15 @@ export const ContentPanel: React.FC = () => {
       {/* Header */}
       <div>
         <div className="flex items-center justify-between mb-1">
-          <h2 className="text-xs font-bold tracking-wider uppercase text-token-secondary">
-            QR Data Type
+          <h2 className="text-lg font-bold tracking-tight text-token-primary">
+            Choose a QR code type
           </h2>
           <span className="text-[11px] font-mono px-2 py-0.5 rounded-full border studio-border studio-surface text-token-secondary">
             6 Encoders
           </span>
         </div>
-        <p className="text-xs text-token-tertiary">
-          Select standard payload format to encode into the QR matrix.
+        <p className="text-sm text-token-tertiary">
+          Pick what the QR code should do, then fill in the details.
         </p>
       </div>
 
@@ -86,28 +86,28 @@ export const ContentPanel: React.FC = () => {
             <button
               key={type.id}
               onClick={() => setDataType(type.id)}
-              className={`flex items-start gap-2.5 p-3 rounded-xl border text-left transition-all cursor-pointer ${
+              className={`flex items-center gap-3 p-3.5 rounded-2xl border text-left transition-all cursor-pointer hover:-translate-y-px ${
                 isSelected
                   ? 'border-2 border-[var(--accent)] bg-[var(--accent-light)] text-token-primary shadow-xs'
                   : 'studio-border studio-surface hover:border-purple-400/40 text-token-secondary hover:text-token-primary'
               }`}
             >
               <div
-                className={`p-1.5 rounded-lg shrink-0 ${
-                  isSelected ? 'bg-purple-600 text-white' : 'studio-surface border studio-border text-token-secondary'
+                className={`p-2.5 rounded-xl shrink-0 ${
+                  isSelected ? 'studio-accent text-white' : 'studio-surface border studio-border text-token-secondary'
                 }`}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-5 h-5" />
               </div>
               <div className="min-w-0">
                 <div
-                  className={`text-xs truncate ${
-                    isSelected ? 'text-token-primary font-bold' : 'text-token-primary font-medium'
+                  className={`text-sm truncate ${
+                    isSelected ? 'text-token-primary font-bold' : 'text-token-primary font-semibold'
                   }`}
                 >
                   {type.label}
                 </div>
-                <div className="text-[10px] text-token-tertiary truncate">{type.desc}</div>
+                <div className="text-xs text-token-tertiary truncate">{type.desc}</div>
               </div>
             </button>
           );
